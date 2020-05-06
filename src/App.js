@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Nav, Navbar } from 'react-bootstrap';
 import LandingPage from './LandingPage.js';
 import Login from './Login.js';
-import Home from './Home.js'
+import Home from './Home.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	return (
