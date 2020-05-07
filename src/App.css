@@ -7,6 +7,14 @@
   pointer-events: none;
 }
 
+.Home-logo {
+  height: 50vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .App-logo-nav {
   height: 7vmin;
   pointer-events: none;
