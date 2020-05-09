@@ -1,27 +1,91 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, ListGroup, Tab, Modal } from 'react-bootstrap';
 import welcome from './Welcome BW/welcome bw.svg';
 import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Home.css';
-import ListWords from './ListWords.js'
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faTrash} from '@fortawesome/free-solid-svg-icons'
+import Profile from './Profile.js';
+import DataRow from './DataRow.js';
+import axios from 'axios';
 
-library.add(faTrash)
 
 function Home() {
-	const [modalShow, setModalShow] = React.useState(true);
+    const [modalShow, setModalShow] = React.useState(true);
+    
+    const [state,setState] = useState({
+        data : [],
+        columns : []
+    })
+
+	axios({
+		method: 'get',
+		url: 'http://localhost:8080/api/login/get/all',
+	})
+		.then(function (response) {
+			// console.log('ini data', response.data);
+			// alert('berhasil get');
+			// const dataRows = [];
+			const data = response.data;
+			const columns = [
+				{
+					name: 'No',
+					selector: 'idBio',
+					sortable: true,
+				},
+				{
+					name: 'Full Name',
+					selector: 'fullName',
+					sortable: true,
+				},
+				{
+					name: 'Birth Date',
+					selector: 'birthDate',
+					sortable: true,
+				},
+				{
+					name: 'Email',
+					selector: 'email',
+					sortable: true,
+				},
+				{
+					name: 'Bio',
+					selector: 'bio',
+					sortable: true,
+				},
+				{
+					name: 'Action',
+					data : function (selector) {
+						return <button className="btn btn-danger">Delete</button>;
+					},
+				},
+			];
+			// const dataRow = <DataRow data={data} columns={columns} />;
+			// dataRows.push(dataRow);
+			setState({...state, data:data, columns:columns});
+		})
+		.catch(function (error) {
+			console.log(error);
+			alert('gagal get');
+		});
 
 	return (
 		<>
-			{/* <Button variant="primary" onClick={() => setModalShow(true)}>
-					Launch vertically centered modal
-				</Button> */}
-
 			<MyVerticallyCenteredModal show={modalShow} onHide={() => setModalShow(false)} />
 
 			<div className="container">
+				<div className="flex-row">
+					<div className="card">
+						<div className="card-header">
+							<button type="button" className="float-right btn btn-primary">
+								Registrasi
+							</button>
+						</div>
+						<div className="card-body">
+                            <DataRow data={state.data} columns={state.columns} />
+                            </div>
+					</div>
+				</div>
+
 				<div className="row profile">
 					<div className="col-md-3">
 						<div className="profile-sidebar">
@@ -58,98 +122,16 @@ function Home() {
 							{/* <!-- END MENU --> */}
 						</div>
 					</div>
+
 					<div className="col-md-9">
 						<div className="profile-content">
-                            <Twit/>
-                        </div>
+							<Profile />
+						</div>
 					</div>
 				</div>
 			</div>
 		</>
 	);
-}
-
-class Twit extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            words : [],
-            currentWord : {
-                text : '',
-                key : ''
-            }
-        }
-        this.addWord = this.addWord.bind(this);
-        this.handleInput = this.handleInput.bind(this);
-        this.deleteWord = this.deleteWord.bind(this);
-        this.setUpdate = this.setUpdate.bind(this);
-    }
-
-    addWord(e){
-        e.preventDefault();
-        const newWord = this.state.currentWord;
-        if(newWord.text !== ""){
-            const words = [...this.state.words, newWord];
-            this.setState({
-                words:words,
-                currentWord:{
-                    text:'',
-                    key:''
-                }
-            })
-        }
-    }
-
-    handleInput(e){
-        this.setState({
-            currentWord:{
-                text : e.target.value,
-                key : Date.now()
-            }
-        })
-    }
-
-    deleteWord(key){
-        const filteredWords=this.state.words.filter(word => 
-            word.key!==key);
-            this.setState({
-                words:filteredWords
-            })
-    }
-
-    setUpdate(text,key){
-        console.log("words:"+this.state.words);
-        const words = this.state.words;
-        words.map(word=>{
-            if(word.key===key){
-                console.log(word.key + " "+key)
-                word.text=text;
-            }
-            return null
-        })
-        this.setState({
-            words:words
-        })
-    }
-
-    render(){
-        return (
-            <div className="container">
-            <div className="card">
-                <div className="card-header">
-                <form className="flex-row" id="twitform" onSubmit={this.addWord}>
-                    <input className="rounded" type="text" placeholder="say your thoughts" value={this.state.currentWord.text} onChange={this.handleInput}>
-                    </input>
-                    <button type="submit">say</button>
-                </form>
-                </div>
-                
-            </div>
-            <p>{this.state.words.text}</p>
-                <ListWords words={this.state.words} deleteWord={this.deleteWord} setUpdate={this.setUpdate}/>
-            </div>
-        )
-    }
 }
 
 function MyVerticallyCenteredModal(props) {
@@ -160,11 +142,9 @@ function MyVerticallyCenteredModal(props) {
 					<img src={welcome} className="Home-logo" alt="logo" />
 					{/* <Lottie options={defaultOptions} height={400} width={400} /> */}
 					<h1> Welcome !!! </h1>
+					<Button onClick={props.onHide}>Get Started</Button>
 				</div>
 			</Modal.Body>
-			<Modal.Footer>
-				<Button onClick={props.onHide}>Close</Button>
-			</Modal.Footer>
 		</Modal>
 	);
 }

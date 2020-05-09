@@ -31,7 +31,7 @@ class LandingPage extends React.Component {
 			<div className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				{/* <Lottie options={defaultOptions} height={400} width={400} /> */}
-				<h1> Informations wants to be free </h1>
+				<h1> Focus focus tralalala </h1>
 				<div className="mb2">
 					<Button href="/home" variant="outline-primary" size="lg" active>
 						Home
