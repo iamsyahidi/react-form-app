@@ -1,6 +1,6 @@
 import React from 'react';
 import './LoginForm.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import FadeTransition from './fadeTransition.jsx';
 import SignIn from './SignIn.js';
 import SignUp from './SignUp.js';

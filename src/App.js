@@ -7,7 +7,8 @@ import { Nav, Navbar } from 'react-bootstrap';
 import LandingPage from './LandingPage.js';
 import Login from './Login.js';
 import Home from './Home.js';
-import 'bootstrap/dist/css/bootstrap.min.css';
+
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import './LoginForm.scss';
 
 
@@ -51,11 +52,16 @@ class App extends React.Component {
 							Login
 						</Button>
 					</Navbar>
+
+			
+					
 					<Switch>
 						<Route exact path="/" component={LandingPage}></Route>
 						<Route exact path="/login" component={Login}></Route>
 						<Route exact path="/home" component={Home}></Route>
 					</Switch>
+
+					
 				</div>
 			</Router>
 		);

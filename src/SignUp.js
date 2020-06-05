@@ -3,7 +3,7 @@ import { Formik } from 'formik';
 import { Form } from 'react-bootstrap';
 import * as yup from 'yup';
 import './LoginForm.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import InputForm from './InputForm.js';
 
