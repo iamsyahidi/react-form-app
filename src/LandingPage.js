@@ -31,7 +31,7 @@ class LandingPage extends React.Component {
 			<div className="App-header">
 				<img src={logo} className="App-logo" alt="logo" />
 				{/* <Lottie options={defaultOptions} height={400} width={400} /> */}
-				<div className="display-4 font-weight-bold"> Focus focus tralalala </div>
+				<div className="display-4 font-weight-bold"> First Attempt in React JS </div>
 				<div className="lead font-weight-light"> Checkout the features below </div>
 				<br></br>
 				<div className="mb2">
